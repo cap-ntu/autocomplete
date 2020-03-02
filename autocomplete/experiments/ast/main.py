@@ -3,6 +3,7 @@ import os
 import torch
 
 from autocomplete.experiments.ast.nt2n_base.main import NT2NBaseMain
+from autocomplete.experiments.ast.nt2n_base_attention.main import NT2NBaseAttentionMain
 from autocomplete.lib.argutils import add_general_arguments, add_batching_data_args, add_optimization_args, \
     add_recurrent_core_args, add_non_terminal_args, add_terminal_args
 from autocomplete.lib.log import logger
@@ -36,11 +37,13 @@ parser.add_argument(
 
 # parse_args = parser.parse_args()
 # gpu_devices = ','.join([str(id) for id in parse_args.gpu_devices])
-os.environ["CUDA_VISIBLE_DEVICES"] = "0 1 2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0 1 2 3"
 
 def get_main(args):
     if args.prediction == 'nt2n_base':
         main = NT2NBaseMain(args)
+    elif args.prediction == 'nt2n_base_attention':
+        main = NT2NBaseAttentionMain(args)
     else:
         raise Exception('Not supported prediction type: {}'.format(args.prediction))
     return main

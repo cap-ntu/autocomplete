@@ -13,9 +13,9 @@ PYTHONPATH=. python3 -m cProfile -o program.prof autocomplete/experiments/ast/ma
     --data_limit 100 \
     --model_save_dir saved/$2 \
     --seq_len 5 \
-    --batch_size 5 \
+    --batch_size 10 \
     --learning_rate 0.001 \
-    --epochs 30 \
+    --epochs 50 \
     --decay_after_epoch 0 \
     --decay_multiplier 0.8 \
     --weight_decay=0. \
