@@ -1,6 +1,6 @@
 numpy
 flask
 keras==2.2.5
-tensorflow==1.14
+tensorflow==1.15.2
 just
 h5py
