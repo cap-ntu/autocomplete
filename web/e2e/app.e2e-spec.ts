@@ -1,6 +1,6 @@
 import { Ng2AutoCompleteKerasPage } from './app.po';
 
-describe('ng2-auto-complete-keras App', function() {
+describe('NTU Auto-complete App', function() {
   let page: Ng2AutoCompleteKerasPage;
 
   beforeEach(() => {

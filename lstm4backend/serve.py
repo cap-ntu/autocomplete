@@ -2,8 +2,8 @@ import os
 from cors import crossdomain
 from flask import Flask, jsonify, request
 
-from neural_complete import neural_complete
-from neural_complete import get_model
+from train import complete
+from train import get_model
 
 
 def read_models(base_path="models/"):
@@ -30,7 +30,7 @@ def predict():
     model_name = args.get("model", "char")
     if model_name not in models:
         models[model_name] = get_model(model_name)
-    suggestions = neural_complete(models[model_name], sentence, [0.2, 0.5, 1])
+    suggestions = complete(models[model_name], sentence, [0.2, 0.5, 1])
     return jsonify({"data": {"results": [x.strip() for x in suggestions]}})
 
 

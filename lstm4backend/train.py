@@ -69,7 +69,7 @@ def get_model(model_name):
     return LSTMBase(model_name)
 
 
-def neural_complete(model, text, diversities):
+def complete(model, text, diversities):
     predictions = [model.predict(text, diversity=d, max_prediction_steps=80,
                                 break_at_token="\n")
                 for d in diversities]
