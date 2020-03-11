@@ -1,9 +1,13 @@
-<div class="centered">
-  <md-card>
-    <h1>
-      {{ title }}
-    </h1>
-
+<div class="blur"></div>
+<md-card class="centered" style="min-height:200px;">
+  <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">
+    {{ title }}
+  </h2>
+  <div style="margin-top: 35px;" highlight-js-content=".highlight">
+    <code class="highlight python"># The Python code will be completed automatically using LSTM based language models. We have lots of models for you to choose, the  number inside the model name is the number of programs we used as training data.</code>
+    <code class="highlight python"># The model was designed by BigCoder Team, Nanyang Technological University, Singapore. </code>
+  </div>
+  <div style="margin-top: 10px;">
     <md-select
       placeholder="Choose a model"
       [(ngModel)]="activeModel"
@@ -14,28 +18,32 @@
       </md-option>
     </md-select>
 
-    <md-input-container>
-      <input
-        ng2-auto-complete
-        mdInput
-        [(ngModel)]="myData"
-        [source]="mySource"
-        path-to-data="data.results"
-        size="100"
-      />
-    </md-input-container>
-
-    <button md-raised-button type="submit" (click)="append()">Predict</button>
-    <button md-raised-button type="submit" (click)="append()">Add</button>
-
-    <div
-      style="min-height:150px; margin-top:50px"
-      highlight-js-content=".highlight"
-    >
-      <code class="highlight python"># generated code follows below</code>
-      <code class="highlight python" *ngFor="let item of codeArray"
-        >{{ item }}<br
-      /></code>
+    <div class="left-right">
+      <md-input-container>
+        <input
+          ng2-auto-complete
+          mdInput
+          [(ngModel)]="myData"
+          [source]="mySource"
+          path-to-data="data.results"
+          size="100"
+        />
+      </md-input-container>
+      <button style="margin-left: 20px; height: 37px; background-color: rgb(248, 248, 248);" md-raised-button type="submit" (click)="append()">
+        Code to Pannel!
+      </button>
     </div>
-  </md-card>
-</div>
+  </div>
+</md-card>
+
+<md-card style="margin-top: 25px;" class="centered">
+  <h2 style="font-family: Georgia, 'Times New Roman', Times, serif;">
+    # Code Pannel
+  </h2>
+  <div style="min-height:260px;" highlight-js-content=".highlight">
+    <code class="highlight python"># The code will be added here: </code>
+    <code class="highlight python" *ngFor="let item of codeArray"
+      >{{ item }}<br
+    /></code>
+  </div>
+</md-card>

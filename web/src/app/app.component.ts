@@ -1,8 +1,6 @@
 import { Component } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 
-import { Http, Headers } from "@angular/http";
-
 import { LocalService } from "./http-serv.service";
 
 import "rxjs/add/observable/of";
@@ -18,7 +16,7 @@ export class AppComponent {
     this.getModels();
   }
 
-  title = "auto-complete code using DNN @NTU";
+  title = "# Auto Python Suggest Demo @NTU";
   data: Observable<string[]>;
   myData: string;
 
