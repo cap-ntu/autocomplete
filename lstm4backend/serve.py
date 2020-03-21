@@ -5,7 +5,6 @@ from flask import Flask, jsonify, request
 from train import complete
 from train import get_model
 
-
 def read_models(base_path="models/"):
     return set([x.split(".")[0] for x in os.listdir(base_path)])
 

@@ -4,3 +4,4 @@ keras
 tensorflow
 just
 h5py
+pandas
