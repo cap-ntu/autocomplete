@@ -53,7 +53,7 @@ class LSTMBase(object):
             print('-' * 50)
             print('Iteration', iteration)
             self.model.fit(self.encoder_decoder.X, self.encoder_decoder.y,
-                            batch_size=batch_size, nb_epoch=num_epochs,
+                           batch_size=batch_size, nb_epoch=num_epochs,
                            **kwargs)
             self._show_test_cases(test_cases)
 
@@ -92,4 +92,4 @@ class LSTMBase(object):
             for diversity in [0.2, 0.5, 1]:
                 print("--------- diversity {} ------- ".format(diversity))
                 print(self.predict(test_case, diversity,
-                                self.encoder_decoder.maxlen))
+                                   self.encoder_decoder.maxlen))

@@ -65,6 +65,7 @@ class App extends React.Component<AppProps, AppState> {
 
   getHints(cm, options) {
     const cursor = cm.getCursor();
+    const line = cm.getLine(cursor.line);
     const data = {
       keyword: this.getKeyword(cm),
       model: this.state.model,
@@ -89,7 +90,7 @@ class App extends React.Component<AppProps, AppState> {
           this.requesting = false;
           accept({
             list: data.data.results,
-            from: Pos(cursor.line, 0),
+            from: Pos(cursor.line, line.search(/\S|$/)),
             to: Pos(cursor.line, cursor.ch),
           });
         }).catch(reason => {
