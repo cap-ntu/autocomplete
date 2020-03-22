@@ -46,8 +46,19 @@
     padding: 20px
 }
 
-/*
-.App-codemirror {
-    height: 800px;
+.CodeMirror-hints {
+    background: #303030;
+    border: 0;
 }
-*/
+
+li.CodeMirror-hint-active {
+    background: #424242;
+    color: white;
+    font-weight: bold;
+}
+
+.CodeMirror-hint {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 16px;
+    color: white;
+}

@@ -154,7 +154,7 @@ class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps, context: any) {
     super(props, context);
     this.state = {
-      code: '# Start your code here:\n\n',
+      code: '# Press Tab to toggle the autocomplete list.\n\n',
       model: '',
       models: [],
       guess: 3,
