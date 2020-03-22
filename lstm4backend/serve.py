@@ -61,7 +61,7 @@ def favicon():
     return app.send_static_file('favicon.ico')
 
 
-def main(host="127.0.0.1", port=9078):
+def main(host="0.0.0.0", port=9078):
     app.run(host=host, port=port, debug=True)
 
 
