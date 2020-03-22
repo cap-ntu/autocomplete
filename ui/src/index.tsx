@@ -26,11 +26,21 @@ const theme = createMuiTheme({
   },
 });
 
+let func = 'Component';
+let backend = '';
+if (React[func].name === func) {
+  // non-minified -> development build
+  console.log('development mode');
+  backend = 'http://127.0.0.1:9078';
+} else {
+  console.log('production mode')
+}
+
 ReactDOM.render(
     <React.StrictMode>
       <MuiThemeProvider theme={theme}>
         <CssBaseline/>
-        <App/>
+        <App backend={backend}/>
       </MuiThemeProvider>
     </React.StrictMode>,
     document.getElementById('root'),
