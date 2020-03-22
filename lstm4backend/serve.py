@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request, send_from_directory
 
 from train import complete
 from train import get_model
-
+import numpy as np
 
 def read_models(base_path="models/"):
     return set([x.split(".")[0] for x in os.listdir(base_path)])
@@ -29,9 +29,11 @@ def predict():
     args = get_args(request)
     sentence = args.get("keyword", "from ")
     model_name = args.get("model", "char")
+    guess = args.get("guess", 3)
+    diversities = np.logspace(-0.6, 0, num=guess)
     if model_name not in models:
         models[model_name] = get_model(model_name)
-    suggestions = complete(models[model_name], sentence, [0.2, 0.5, 1])
+    suggestions = complete(models[model_name], sentence, diversities)
     return jsonify({"data": {"results": [x.strip() for x in suggestions]}})
 
 

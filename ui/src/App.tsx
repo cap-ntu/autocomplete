@@ -69,6 +69,7 @@ class App extends React.Component<AppProps, AppState> {
     const data = {
       keyword: this.getKeyword(cm),
       model: this.state.model,
+      guess: this.state.guess,
     };
     const predictURL = `${this.props.backend}/predict`;
 
