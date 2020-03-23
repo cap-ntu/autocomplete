@@ -1,22 +1,20 @@
 import React from 'react';
-
 import {
   Container,
-  Paper,
-  Typography,
-  Grid,
   FormControl,
-  Select,
+  Grid,
   InputLabel,
-  Slider,
   MenuItem,
+  Paper,
+  Select,
+  Slider,
+  Typography,
 } from '@material-ui/core';
 
 import {Pos} from 'codemirror';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
-
 import fetch from 'isomorphic-fetch';
 
 import './App.css';
@@ -36,10 +34,6 @@ export interface AppState {
 class App extends React.Component<AppProps, AppState> {
   private options: any;
   private requesting: boolean;
-
-/*  static defaultProps = {
-    backend: 'http://127.0.0.1:9078',
-  };*/
 
   static trim(s) {
     return (s || '').replace(/^\s+|\s+$/g, '');
@@ -97,7 +91,14 @@ class App extends React.Component<AppProps, AppState> {
         }).catch(reason => {
           console.log(reason);
           this.requesting = false;
-          reject(reason);
+          accept({
+            list: [
+              App.trim(line),
+              'Backend error: Please retry or change a model!',
+            ],
+            from: Pos(cursor.line, line.search(/\S|$/)),
+            to: Pos(cursor.line, cursor.ch),
+          });
         });
       }, 0);
     });
@@ -106,7 +107,7 @@ class App extends React.Component<AppProps, AppState> {
   tabFunction(cm) {
     const cursor = cm.getCursor();
     const line = cm.getLine(cursor.line);
-    if (cursor.ch && line[cursor.ch - 1] !== ' ' && cursor.ch === line.length) {
+    if (cursor.ch && line[cursor.ch - 1] !== ' ') {
       if (!this.requesting) {
         this.requesting = true;
         cm.showHint();
@@ -169,11 +170,9 @@ class App extends React.Component<AppProps, AppState> {
       indentWithTabs: true,
       indentUnit: 4,
       extraKeys: {
-        // 'Ctrl-Space': 'autocomplete',
         'Tab': this.tabFunction.bind(this),
       },
       hintOptions: {hint: this.getHints.bind(this)},
-      // height: '800px',
     };
     this.requesting = false;
   }
@@ -213,14 +212,12 @@ class App extends React.Component<AppProps, AppState> {
                           onChange={this.handleChangeModel.bind(this)}
                           displayEmpty
                           autoWidth
-                          // className={classes.selectEmpty}
                       >
                         {this.state.models.map((model, index) =>
                             <MenuItem key={index}
                                       value={model}>{model}</MenuItem>,
                         )}
                       </Select>
-                      {/*<FormHelperText>Label + placeholder</FormHelperText>*/}
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={6} md={3}>
