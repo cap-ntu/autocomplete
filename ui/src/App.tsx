@@ -25,6 +25,7 @@ export interface AppProps {
 
 export interface AppState {
   code: string;
+  language: string;
   model: string;
   models: Array<string>;
   guess: number;
@@ -32,7 +33,9 @@ export interface AppState {
 }
 
 class App extends React.Component<AppProps, AppState> {
+  private cm: any;
   private options: any;
+  private languages: Array<string>;
   private requesting: boolean;
 
   static trim(s) {
@@ -133,6 +136,13 @@ class App extends React.Component<AppProps, AppState> {
     cm.replaceSelection(spaces);
   }
 
+  handleChangeLanguage(event) {
+    // console.log(this.cm);
+    this.options.mode = event.target.value;
+    // this.cm.setOption('mode', event.target.value);
+    this.setState({language: event.target.value});
+  }
+
   handleChangeModel(event) {
     this.setState({model: event.target.value});
   }
@@ -167,8 +177,14 @@ class App extends React.Component<AppProps, AppState> {
 
   constructor(props: AppProps, context: any) {
     super(props, context);
+    this.languages = [
+      'python',
+      'robotframework',
+    ];
+    this.cm = null;
     this.state = {
       code: '# Press Tab to toggle the autocomplete list.\n\n',
+      language: this.languages[0],
       model: '',
       models: [],
       guess: 3,
@@ -178,7 +194,7 @@ class App extends React.Component<AppProps, AppState> {
       lineNumbers: true,
       styleActiveLine: true,
       matchBrackets: true,
-      mode: 'python',
+      mode: this.state.language,
       theme: 'material-darker',
       indentWithTabs: true,
       indentUnit: 4,
@@ -214,6 +230,25 @@ class App extends React.Component<AppProps, AppState> {
                 </Typography>
                 <br/>
                 <Grid container spacing={4}>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <FormControl style={{width: '100%'}}>
+                      <InputLabel shrink id="choose-language-label">
+                        Choose a Language
+                      </InputLabel>
+                      <Select
+                          labelId="choose-language-label"
+                          value={this.state.language}
+                          onChange={this.handleChangeLanguage.bind(this)}
+                          displayEmpty
+                          autoWidth
+                      >
+                        {this.languages.map((model, index) =>
+                            <MenuItem key={index}
+                                      value={model}>{model}</MenuItem>,
+                        )}
+                      </Select>
+                    </FormControl>
+                  </Grid>
                   <Grid item xs={12} sm={6} md={3}>
                     <FormControl style={{width: '100%'}}>
                       <InputLabel shrink id="choose-model-label">
@@ -261,7 +296,8 @@ class App extends React.Component<AppProps, AppState> {
           </Paper>
           <Paper className="App-paper">
             <CodeMirror className="App-codemirror"
-                        value={this.state.code} options={this.options}/>
+                        value={this.state.code} options={this.options}
+                        editorDidMount={editor => { this.cm = editor }}/>
           </Paper>
         </Container>
     );

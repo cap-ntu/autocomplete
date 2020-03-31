@@ -14,6 +14,7 @@ import 'source-code-pro/source-code-pro.css'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material-darker.css';
 import 'codemirror/mode/python/python';
+import './robotframework.mode'
 
 import './index.css';
 
