@@ -1,10 +1,12 @@
 import os
 from cors import crossdomain
 from flask import Flask, jsonify, request, send_from_directory
+import click
 
 from train import complete
 from train import get_model
 import numpy as np
+
 
 def read_models(base_path="models/"):
     return set([x.split(".")[0] for x in os.listdir(base_path)])
@@ -63,8 +65,15 @@ def favicon():
     return app.send_static_file('favicon.ico')
 
 
-def main(host="0.0.0.0", port=9078):
-    app.run(host=host, port=port, debug=True)
+@click.command()
+@click.option('--host', default='0.0.0.0', type=str,
+              help='Host IP')
+@click.option('-p', '--port', default=9078, type=int,
+              help='Host Port')
+@click.option('--debug', is_flag=True,
+              help='Use Debug Mode')
+def main(host, port, debug):
+    app.run(host=host, port=port, debug=debug)
 
 
 if __name__ == "__main__":

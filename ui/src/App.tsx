@@ -69,6 +69,16 @@ class App extends React.Component<AppProps, AppState> {
 
     return new Promise((accept, reject) => {
       setTimeout(() => {
+        const failed = () => {
+          accept({
+            list: [
+              App.trim(line),
+              'Backend error: Please retry or change a model!',
+            ],
+            from: Pos(cursor.line, line.search(/\S|$/)),
+            to: Pos(cursor.line, cursor.ch),
+          });
+        };
         fetch(predictURL, {
           headers: {
             'Content-Type': 'application/json',
@@ -78,27 +88,30 @@ class App extends React.Component<AppProps, AppState> {
           cache: 'no-cache',
           body: JSON.stringify(data),
         }).then((response) => {
-          if (!response.ok) throw Error(response.statusText);
+          if (!response.ok) {
+            console.log(response.statusText);
+            this.requesting = false;
+            failed();
+            return null;
+          }
           return response.json();
         }).then(data => {
-          console.log(data.data.results);
-          this.requesting = false;
-          accept({
-            list: data.data.results,
-            from: Pos(cursor.line, line.search(/\S|$/)),
-            to: Pos(cursor.line, cursor.ch),
-          });
+          if (data && data.data && data.data.hasOwnProperty('results')) {
+            console.log(data.data.results);
+            this.requesting = false;
+            accept({
+              list: data.data.results,
+              from: Pos(cursor.line, line.search(/\S|$/)),
+              to: Pos(cursor.line, cursor.ch),
+            });
+          } else {
+            this.requesting = false;
+            failed();
+          }
         }).catch(reason => {
           console.log(reason);
           this.requesting = false;
-          accept({
-            list: [
-              App.trim(line),
-              'Backend error: Please retry or change a model!',
-            ],
-            from: Pos(cursor.line, line.search(/\S|$/)),
-            to: Pos(cursor.line, cursor.ch),
-          });
+          failed();
         });
       }, 0);
     });
