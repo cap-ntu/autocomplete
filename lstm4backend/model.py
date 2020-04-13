@@ -1,16 +1,16 @@
 import os
 import just
 import numpy as np
-from keras.layers import Activation, Dense, LSTM
-from keras.models import Sequential, load_model
-from keras.optimizers import RMSprop
+from tensorflow.keras.layers import Activation, Dense, LSTM
+from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.optimizers import RMSprop
 
 
 class LSTMBase(object):
     def __init__(self, model_name, encoder_decoder=None, hidden_units=128, base_path="models/"):
         self.model_name = model_name
-        self.h5_path = base_path + model_name + ".h5"
-        self.pkl_path = base_path + model_name + ".pkl"
+        self.h5_path = os.path.join(base_path, model_name + ".h5")
+        self.pkl_path = os.path.join(base_path, model_name + ".pkl")
         self.model = None
         self.hidden_units = hidden_units
         if encoder_decoder is None:
@@ -53,7 +53,7 @@ class LSTMBase(object):
             print('-' * 50)
             print('Iteration', iteration)
             self.model.fit(self.encoder_decoder.X, self.encoder_decoder.y,
-                            batch_size=batch_size, nb_epoch=num_epochs,
+                           batch_size=batch_size, nb_epoch=num_epochs,
                            **kwargs)
             self._show_test_cases(test_cases)
 
@@ -92,4 +92,4 @@ class LSTMBase(object):
             for diversity in [0.2, 0.5, 1]:
                 print("--------- diversity {} ------- ".format(diversity))
                 print(self.predict(test_case, diversity,
-                                self.encoder_decoder.maxlen))
+                                   self.encoder_decoder.maxlen))

@@ -4,3 +4,6 @@ keras
 tensorflow
 just
 h5py
+pandas
+watchdog
+click
