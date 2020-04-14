@@ -1,5 +1,32 @@
 ## Automatically Code Suggestion by Neural Network
 
-The demo screenshot,
+A LSTM based method to complete the code by given chars/tokens.
 
-![](https://i.loli.net/2020/03/11/hP7Szt3jeLGOUI2.png)
+
+### Train Model
+
+install the requirement (python 3.5)
+
+```bash
+$ pip install -r requirements.txt
+```
+
+backend
+
+```bash
+$ cd ./lstm4backend
+```
+
+train token model
+
+```bash
+$ python train.py <model_name> token
+```
+
+train char model
+
+```bash
+$ python train.py <model_name> char
+```
+
+Note: dataset should be set inside the `train.py`. 
