@@ -30,3 +30,37 @@ $ python train.py <model_name> char
 ```
 
 Note: dataset should be set inside the `train.py`. 
+
+
+### Serving 
+
+backend
+
+```bash
+$ cd ./lstm4backend
+```
+
+start serving 
+
+```bash
+$ python serve.py
+```
+
+### Web Application 
+
+```bash
+$ cd ./ui
+```
+
+using npm or yarn to start the application
+
+```bash
+$ yarn 
+```
+
+or 
+
+```bash
+$ npm install | npm start
+```
+
